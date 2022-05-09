@@ -119,9 +119,6 @@ benchinit() {
 	if  [ ! -e './speedtest-cli/speedtest' ]; then
 		echo " Installing Speedtest-cli ..."
 		wget --no-check-certificate -qO speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-$(uname -m).tgz > /dev/null 2>&1
-		if [[ $? -ne '0' ]]; then
-			wget --no-check-certificate -qO speedtest.tgz https://down.vpsaff.net/linux/speedtest/ookla-speedtest/1.1.1/ookla-speedtest-1.1.1-linux-$(uname -m).tgz > /dev/null 2>&1
-		fi
 	fi
 	mkdir -p speedtest-cli && tar zxvf speedtest.tgz -C ./speedtest-cli/ > /dev/null 2>&1 && chmod a+rx ./speedtest-cli/speedtest
 	
@@ -138,13 +135,13 @@ benchinit() {
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 		if [ ! -e './geekbench/geekbench5' ]; then
 			echo " Installing Geekbench 5..."
-			curl -s https://down.vpsaff.net/linux/geekbench/Geekbench-5.4.4-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-5.4.4-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench5
 	else
 		if [ ! -e './geekbench/geekbench5' ]; then
 			echo " Installing Geekbench 5..."
-			curl -s https://down.vpsaff.net/linux/geekbench/Geekbench-5.4.4-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-5.4.4-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench5
 	fi
@@ -160,7 +157,7 @@ download_geekbench4(){
 	fi
 	if [[ ! -d ./geekbench/geekbench4 ]]; then
 		echo -n -e " Installing Geekbench 4..."
-		curl -s https://down.vpsaff.net/linux/geekbench/Geekbench-4.4.4-Linux.tar.gz | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+		curl -s https://cdn.geekbench.com/Geekbench-4.4.4-Linux.tar.gz | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 	fi
 	chmod +x ./geekbench/geekbench4
 }
