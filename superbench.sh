@@ -419,13 +419,18 @@ print_io() {
 		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
 		io3=$( io_test $writemb )
 		echo -e "${YELLOW}$io3${PLAIN}" | tee -a $log
+		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
+		io4=$( io_test $writemb )
+		echo -e "${YELLOW}$io4${PLAIN}" | tee -a $log
 		ioraw1=$( echo $io1 | awk 'NR==1 {print $1}' )
 		[ "`echo $io1 | awk 'NR==1 {print $2}'`" == "GB/s" ] && ioraw1=$( awk 'BEGIN{print '$ioraw1' * 1024}' )
 		ioraw2=$( echo $io2 | awk 'NR==1 {print $1}' )
 		[ "`echo $io2 | awk 'NR==1 {print $2}'`" == "GB/s" ] && ioraw2=$( awk 'BEGIN{print '$ioraw2' * 1024}' )
 		ioraw3=$( echo $io3 | awk 'NR==1 {print $1}' )
 		[ "`echo $io3 | awk 'NR==1 {print $2}'`" == "GB/s" ] && ioraw3=$( awk 'BEGIN{print '$ioraw3' * 1024}' )
-		ioall=$( awk 'BEGIN{print '$ioraw1' + '$ioraw2' + '$ioraw3'}' )
+		ioraw4=$( echo $io4 | awk 'NR==1 {print $1}' )
+		[ "`echo $io4 | awk 'NR==1 {print $2}'`" == "GB/s" ] && ioraw4=$( awk 'BEGIN{print '$ioraw4' * 1024}' )
+		ioall=$( awk 'BEGIN{print '$ioraw2' + '$ioraw3' + '$ioraw4'}' )
 		ioavg=$( awk 'BEGIN{printf "%.1f", '$ioall' / 3}' )
 		echo -e " Average I/O Speed    : ${YELLOW}$ioavg MB/s${PLAIN}" | tee -a $log
 	else
@@ -745,11 +750,11 @@ bench_all(){
 	next;
 	print_io;
 	next;
-	geekbench;
-	next;
 	print_china_speedtest;
 	next;
 	print_global_speedtest;
+	next;
+	geekbench;
 	next;
 	print_end_time;
 	next;
