@@ -15,7 +15,7 @@ about() {
 	echo " ========================================================= "
 	echo " \                 Superbench.sh  Script                 / "
 	echo " \       Basic system info, I/O test and speedtest       / "
-	echo " \                   v1.3.6                 / "
+	echo " \                        v1.3.6                         / "
 	echo " ========================================================= "
 	echo ""
 	echo ""
