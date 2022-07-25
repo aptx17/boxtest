@@ -218,27 +218,15 @@ print_china_speedtest() {
     speed_test '3633'  'Shanghai     CT'
 	speed_test '27594' 'Guangzhou 5G CT'
     speed_test '26352' 'Nanjing 5G   CT'
-    speed_test '34115' 'TianJin 5G   CT'
-    speed_test '7509'  'Hangzhou     CT'
-#	speed_test '23844' 'Wuhan        CT'
 	speed_test '5145'  'Beijing      CU'
 	speed_test '24447' 'Shanghai 5G  CU'
 	speed_test '26678' 'Guangzhou 5G CU'
-#	speed_test '16192' 'ShenZhen     CU'
-	speed_test '9484'  'Changchun    CU'
 	speed_test '45170' 'Wu Xi        CU'
-	speed_test '13704' 'Nanjing      CU'
-#	speed_test '37235' 'Shenyang     CU'
-#	speed_test '41009' 'Wuhan 5G     CU'
 	speed_test '25637' 'Shanghai 5G  CM'
-#	speed_test '26656' 'Harbin       CM'
-	speed_test '26940' 'Yinchuan     CM'
-#	speed_test '27249' 'Nanjing 5G   CM'
-#	speed_test '40131' 'Suzhou 5G    CM'
 	speed_test '15863' 'Nanning      CM'
 	speed_test '25858' 'Beijing      CM'
 	speed_test '4575'  'Chengdu      CM'
-	speed_test '5505'  'Beijing      BN'
+	speed_test '4515' 'ShenZhen     CM'
 }
 
 print_global_speedtest() {
@@ -247,15 +235,13 @@ print_global_speedtest() {
     speed_test '33250' 'Macau        CN'
 	speed_test '29106' 'Taiwan       CN'
 	speed_test '40508' 'Singapore    SG'
-#	speed_test '4956'  'Kuala Lumpur MY'
-#	speed_test '38134' 'Fukuoka      JP'
-	speed_test '28910' 'Tokyo        JP'
+	speed_test '21569' 'Tokyo        JP'
 	speed_test '6527'  'Seoul        KR'
     speed_test '18229' 'Los Angeles  US'
-#	speed_test '15786' 'San Jose     US'
 	speed_test '41248' 'London       UK'
 	speed_test '10010' 'Frankfurt    DE'
-	speed_test '21268' 'France       FR'
+	speed_test '24215' 'Paris       FR'
+	speed_test '28922' 'Amsterdam       NL'
 }
 
 print_speedtest_fast() {
@@ -483,10 +469,10 @@ print_end_time() {
 
 get_system_info() {
 	cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
-	cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
-	freq=$( awk -F: '/cpu MHz/ {freq=$2} END {print freq}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
+	cores=$( awk -F: '/processor/ {core++} END {print core}' /proc/cpuinfo )
+	freq=$( awk -F'[ :]' '/cpu MHz/ {print $4;exit}' /proc/cpuinfo )
 	corescache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
-	aes=$(cat /proc/cpuinfo | grep aes)
+	aes=$(grep -i 'aes' /proc/cpuinfo)
 	[[ -z "$aes" ]] && aes="Disabled" || aes="Enabled"
 	virt=$(cat /proc/cpuinfo | grep 'vmx\|svm')
 	[[ -z "$virt" ]] && virt="Disabled" || virt="Enabled"
@@ -677,7 +663,7 @@ function UnlockTiktokTest() {
     if [[ "$result" != "curl"* ]]; then
         result="$(echo ${result} | grep 'region' | awk -F 'region":"' '{print $2}' | awk -F '"' '{print $1}')";
 		if [ -n "$result" ]; then
-			if [[ "$result" == "The #TikTokTraditions"* ]]; then
+			if [[ "$result" == "The #TikTokTraditions"* ]] || [[ "$result" == "This LIVE isn't available"* ]]; then
 				echo -e " TikTok               : ${RED}No${PLAIN}" | tee -a $log
 			else
 				echo -e " TikTok               : ${GREEN}Yes (Region: ${result})${PLAIN}" | tee -a $log
@@ -768,6 +754,7 @@ cleanup() {
 	rm -f test_file_*
 	rm -rf speedtest*
 	rm -rf geekbench*
+	rm -rf wget-log*
 }
 
 bench_all(){
