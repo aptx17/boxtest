@@ -341,6 +341,8 @@ virt_check(){
 		virtual="KVM"
 	elif [[ "$cname" == *KVM* ]]; then
 		virtual="KVM"
+	elif [[ "${sys_product}" == *KVM* ]]; then
+		virtual="KVM"
 	elif [[ "$cname" == *QEMU* ]]; then
 		virtual="KVM"
 	elif [[ "$virtualx" == *"VMware Virtual Platform"* ]]; then
@@ -436,8 +438,8 @@ print_system_info() {
 	echo -e " CPU Cache            : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
 	echo -e " AES-NI               : $aes" | tee -a $log
 	echo -e " VM-x/AMD-V           : $virt" | tee -a $log
-	echo -e " OS                   : ${SKYBLUE}$opsy ($lbit Bit) ${YELLOW}$virtual${PLAIN}" | tee -a $log
 	echo -e " Virtualization       : ${YELLOW}$virtual${PLAIN}" | tee -a $log
+	echo -e " OS                   : ${SKYBLUE}$opsy ($lbit Bit)${PLAIN}" | tee -a $log
 	echo -e " Kernel               : ${SKYBLUE}$kern${PLAIN}" | tee -a $log
 	echo -e " Total Space          : ${SKYBLUE}$disk_used_size GB / ${YELLOW}$disk_total_size GB ${PLAIN}" | tee -a $log
 	echo -e " Total RAM            : ${SKYBLUE}$uram MB / ${YELLOW}$tram MB ${SKYBLUE}($bram MB Buff)${PLAIN}" | tee -a $log
@@ -477,7 +479,7 @@ get_system_info() {
 	aes=$(grep -i 'aes' /proc/cpuinfo)
 	[[ -z "$aes" ]] && aes="${RED}Disabled ${PLAIN}" || aes="${YELLOW}Enabled ${PLAIN}"
 	virt=$( grep -Ei 'vmx|svm' /proc/cpuinfo )
-	[[ -z "$virt" ]] && virt="Disabled" || virt="Enabled"
+	[[ -z "$virt" ]] && virt="${RED}Disabled ${PLAIN}" || virt="${YELLOW}Enabled ${PLAIN}"
 	tram=$( free -m | awk '/Mem/ {print $2}' )
 	uram=$( free -m | awk '/Mem/ {print $3}' )
 	bram=$( free -m | awk '/Mem/ {print $6}' )
