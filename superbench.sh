@@ -434,8 +434,10 @@ print_system_info() {
 	echo -e " CPU Model            : ${SKYBLUE}$cname${PLAIN}" | tee -a $log
 	echo -e " CPU Cores            : ${YELLOW}$cores Cores ${SKYBLUE}$freq MHz $arch${PLAIN}" | tee -a $log
 	echo -e " CPU Cache            : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
-	echo -e " CPU Flags            : ${SKYBLUE}AES-NI $aes & ${YELLOW}VM-x/AMD-V $virt ${PLAIN}" | tee -a $log
+	echo -e " AES-NI               : $aes" | tee -a $log
+	echo -e " VM-x/AMD-V           : $virt" | tee -a $log
 	echo -e " OS                   : ${SKYBLUE}$opsy ($lbit Bit) ${YELLOW}$virtual${PLAIN}" | tee -a $log
+	echo -e " Virtualization       : ${YELLOW}$virtual${PLAIN}" | tee -a $log
 	echo -e " Kernel               : ${SKYBLUE}$kern${PLAIN}" | tee -a $log
 	echo -e " Total Space          : ${SKYBLUE}$disk_used_size GB / ${YELLOW}$disk_total_size GB ${PLAIN}" | tee -a $log
 	echo -e " Total RAM            : ${SKYBLUE}$uram MB / ${YELLOW}$tram MB ${SKYBLUE}($bram MB Buff)${PLAIN}" | tee -a $log
@@ -473,8 +475,8 @@ get_system_info() {
 	freq=$( awk -F'[ :]' '/cpu MHz/ {print $4;exit}' /proc/cpuinfo )
 	corescache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
 	aes=$(grep -i 'aes' /proc/cpuinfo)
-	[[ -z "$aes" ]] && aes="Disabled" || aes="Enabled"
-	virt=$(cat /proc/cpuinfo | grep 'vmx\|svm')
+	[[ -z "$aes" ]] && aes="${RED}Disabled ${PLAIN}" || aes="${YELLOW}Enabled ${PLAIN}"
+	virt=$( grep -Ei 'vmx|svm' /proc/cpuinfo )
 	[[ -z "$virt" ]] && virt="Disabled" || virt="Enabled"
 	tram=$( free -m | awk '/Mem/ {print $2}' )
 	uram=$( free -m | awk '/Mem/ {print $3}' )
