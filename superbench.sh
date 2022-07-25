@@ -214,10 +214,10 @@ speed_test(){
 
 print_china_speedtest() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
-    speed_test '' 'Speedtest.net'
-    speed_test '3633'  'Shanghai     CT'
+        speed_test '' 'Speedtest.net'
+        speed_test '3633'  'Shanghai     CT'
 	speed_test '27594' 'Guangzhou 5G CT'
-    speed_test '26352' 'Nanjing 5G   CT'
+        speed_test '26352' 'Nanjing 5G   CT'
 	speed_test '5145'  'Beijing      CU'
 	speed_test '24447' 'Shanghai 5G  CU'
 	speed_test '26678' 'Guangzhou 5G CU'
@@ -226,28 +226,28 @@ print_china_speedtest() {
 	speed_test '15863' 'Nanning      CM'
 	speed_test '25858' 'Beijing      CM'
 	speed_test '4575'  'Chengdu      CM'
-	speed_test '4515' 'ShenZhen     CM'
+	speed_test '4515'  'ShenZhen     CM'
 }
 
 print_global_speedtest() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
-    speed_test '1536'  'Hong Kong    CN'
-    speed_test '33250' 'Macau        CN'
-	speed_test '29106' 'Taiwan       CN'
+        speed_test '1536'  'Hong Kong    CN'
+        speed_test '33250' 'Macau        CN'
+	speed_test '29106' 'Taiwan       TW'
 	speed_test '40508' 'Singapore    SG'
 	speed_test '21569' 'Tokyo        JP'
 	speed_test '6527'  'Seoul        KR'
-    speed_test '18229' 'Los Angeles  US'
+        speed_test '18229' 'Los Angeles  US'
 	speed_test '41248' 'London       UK'
 	speed_test '10010' 'Frankfurt    DE'
-	speed_test '24215' 'Paris       FR'
-	speed_test '28922' 'Amsterdam       NL'
+	speed_test '24215' 'Paris        FR'
+	speed_test '28922' 'Amsterdam    NL'
 }
 
 print_speedtest_fast() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
-    speed_test '' 'Speedtest.net'
-    speed_test '3633'  'Shanghai     CT'
+        speed_test '' 'Speedtest.net'
+        speed_test '3633'  'Shanghai     CT'
 	speed_test '27594' 'Guangzhou 5G CT'
 	speed_test '26678' 'Guangzhou 5G CU'
 	speed_test '9484'  'Changchun    CU'
