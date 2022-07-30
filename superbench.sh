@@ -188,7 +188,7 @@ speed_test(){
 
 	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
 	        if [[ $(awk -v num1=${temp} -v num2=0 'BEGIN{print(num1>num2)?"1":"0"}') -eq 1 ]]; then
-	        	printf "${YELLOW}%-18s${AZURE}%-18s${AZURE}%-20s${GREEN}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
+	        	printf "${YELLOW}%-18s${COBALT}%-18s${COBALT}%-20s${GREEN}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
 	        fi
 		else
 	        local cerror="ERROR"
@@ -204,7 +204,7 @@ speed_test(){
 
 	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
 	        if [[ $(awk -v num1=${temp} -v num2=0 'BEGIN{print(num1>num2)?"1":"0"}') -eq 1 ]]; then
-	        	printf "${YELLOW}%-18s${AZURE}%-18s${AZURE}%-20s${GREEN}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
+	        	printf "${YELLOW}%-18s${COBALT}%-18s${COBALT}%-20s${GREEN}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
 			fi
 		else
 	        local cerror="ERROR"
