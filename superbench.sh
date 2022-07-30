@@ -188,7 +188,7 @@ speed_test(){
 
 	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
 	        if [[ $(awk -v num1=${temp} -v num2=0 'BEGIN{print(num1>num2)?"1":"0"}') -eq 1 ]]; then
-	        	printf "${YELLOW}%-18s${GREEN}%-18s${RED}%-20s${SKYBLUE}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
+	        	printf "${YELLOW}%-18s${#007fff}%-18s${#007fff}%-20s${GREEN}%-12s${PLAIN}\n" " ${nodeName}" "${reupload} Mbit/s" "${REDownload} Mbit/s" "${relatency} ms" | tee -a $log
 	        fi
 		else
 	        local cerror="ERROR"
@@ -216,15 +216,13 @@ print_china_speedtest() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
         speed_test '' 'Speedtest.net'
         speed_test '3633'  'Shanghai     CT'
-	speed_test '27594' 'Guangzhou 5G CT'
+	speed_test '29353' 'Wuhan 5G     CT'
         speed_test '26352' 'Nanjing 5G   CT'
-	speed_test '5145'  'Beijing      CU'
 	speed_test '24447' 'Shanghai 5G  CU'
-	speed_test '26678' 'Guangzhou 5G CU'
+	speed_test '4884'  'Fuzhou       CU'
 	speed_test '45170' 'Wu Xi        CU'
 	speed_test '25637' 'Shanghai 5G  CM'
 	speed_test '15863' 'Nanning      CM'
-	speed_test '25858' 'Beijing      CM'
 	speed_test '4575'  'Chengdu      CM'
 	speed_test '4515'  'ShenZhen     CM'
 }
