@@ -214,16 +214,22 @@ speed_test(){
 print_china_speedtest() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
         speed_test '' 'Speedtest.net'
+	sleep 6
         speed_test '3633'  'Shanghai     CT'
+	sleep 6
 	speed_test '29353' 'Wuhan 5G     CT'
+	sleep 6
         speed_test '26352' 'Nanjing 5G   CT'
+	sleep 6
 	speed_test '24447' 'Shanghai 5G  CU'
-	speed_test '4884'  'Fuzhou       CU'
+	sleep 6
 	speed_test '45170' 'Wu Xi        CU'
+	sleep 6
 	speed_test '25637' 'Shanghai 5G  CM'
+	sleep 6
 	speed_test '15863' 'Nanning      CM'
+	sleep 6
 	speed_test '4575'  'Chengdu      CM'
-	speed_test '4515'  'ShenZhen     CM'
 }
 
 print_global_speedtest() {
