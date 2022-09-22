@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 SKYBLUE='\033[0;36m'
 PLAIN='\033[0m'
-BrowserUA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+BrowserUA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
 
 about() {
 	echo ""
@@ -117,7 +117,7 @@ benchinit() {
 
 	if  [ ! -e './speedtest-cli/speedtest' ]; then
 		echo " Installing Speedtest-cli ..."
-		wget --no-check-certificate -qO speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-$(uname -m).tgz > /dev/null 2>&1
+		wget --no-check-certificate -qO speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-$(uname -m).tgz > /dev/null 2>&1
 	fi
 	mkdir -p speedtest-cli && tar zxvf speedtest.tgz -C ./speedtest-cli/ > /dev/null 2>&1 && chmod a+rx ./speedtest-cli/speedtest
 	
@@ -177,7 +177,7 @@ speed_test(){
 		if [[ ${is_upload} ]]; then
 	        local REDownload=$(cat $speedLog | awk -F ' ' '/Download/{print $3}')
 	        local reupload=$(cat $speedLog | awk -F ' ' '/Upload/{print $3}')
-	        local relatency=$(cat $speedLog | awk -F ' ' '/Latency/{print $2}')
+	        local relatency=$(cat $speedLog | awk -F ' ' '/Idle/{print $3}')
 
 	        temp=$(echo "$relatency" | awk -F '.' '{print $1}')
         	if [[ ${temp} -gt 50 ]]; then
