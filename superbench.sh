@@ -8,14 +8,13 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 SKYBLUE='\033[0;36m'
 PLAIN='\033[0m'
-BrowserUA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36"
+BrowserUA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
 
 about() {
 	echo ""
 	echo " ========================================================= "
 	echo " \                 Superbench.sh  Script                 / "
 	echo " \       Basic system info, I/O test and speedtest       / "
-	echo " \                        v1.3.6                         / "
 	echo " ========================================================= "
 	echo ""
 	echo ""
@@ -118,7 +117,7 @@ benchinit() {
 
 	if  [ ! -e './speedtest-cli/speedtest' ]; then
 		echo " Installing Speedtest-cli ..."
-		wget --no-check-certificate -qO speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-$(uname -m).tgz > /dev/null 2>&1
+		wget --no-check-certificate -qO speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-$(uname -m).tgz > /dev/null 2>&1
 	fi
 	mkdir -p speedtest-cli && tar zxvf speedtest.tgz -C ./speedtest-cli/ > /dev/null 2>&1 && chmod a+rx ./speedtest-cli/speedtest
 	
@@ -398,20 +397,20 @@ print_io() {
 	
 	writemb_size="$(( writemb / 2 ))MB"
 	if [[ $writemb_size == "1024MB" ]]; then
-		writemb_size="1.0GB"
+		writemb_size="1GiB"
 	fi
 
 	if [[ $writemb != "1" ]]; then
-		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)   : " | tee -a $log
 		io1=$( io_test $writemb )
 		echo -e "${YELLOW}$io1${PLAIN}" | tee -a $log
-		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)   : " | tee -a $log
 		io2=$( io_test $writemb )
 		echo -e "${YELLOW}$io2${PLAIN}" | tee -a $log
-		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)   : " | tee -a $log
 		io3=$( io_test $writemb )
 		echo -e "${YELLOW}$io3${PLAIN}" | tee -a $log
-		echo -n " I/O Speed( $writemb_size )   : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)   : " | tee -a $log
 		io4=$( io_test $writemb )
 		echo -e "${YELLOW}$io4${PLAIN}" | tee -a $log
 		ioraw1=$( echo $io1 | awk 'NR==1 {print $1}' )
@@ -714,12 +713,6 @@ function StreamingMediaUnlockTest(){
 	UnlockBilibiliTest
 	UnlockTiktokTest
 	UnlockiQiyiIntlTest
-}
-
-print_intro() {
-	printf ' Superbench.sh -- https://www.idcoffer.com/archives/4764\n' | tee -a $log
-	printf " Mode  : \e${GREEN}%s\e${PLAIN}    Version : \e${GREEN}%s${PLAIN}\n" $mode_name 1.3.6 | tee -a $log
-	printf ' Usage : bash <(wget -qO- https://down.vpsaff.net/linux/speedtest/superbench.sh)\n' | tee -a $log
 }
 
 sharetest() {
