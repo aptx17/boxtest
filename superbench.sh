@@ -198,7 +198,7 @@ speed_test(){
 		if [[ ${is_upload} ]]; then
 	        local REDownload=$(cat $speedLog | awk -F ' ' '/Download/{print $3}')
 	        local reupload=$(cat $speedLog | awk -F ' ' '/Upload/{print $3}')
-	        local relatency=$(cat $speedLog | awk -F ' ' '/Latency/{print $2}')
+	        local relatency=$(cat $speedLog | awk -F ' ' '/Latency/{print $3}')
 	        local nodeName=$2
 
 	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
