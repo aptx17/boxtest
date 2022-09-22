@@ -407,16 +407,16 @@ print_io() {
 	fi
 
 	if [[ $writemb != "1" ]]; then
-		echo -n " I/O Speed ($writemb_size)    : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)     : " | tee -a $log
 		io1=$( io_test $writemb )
 		echo -e "${YELLOW}$io1${PLAIN}" | tee -a $log
-		echo -n " I/O Speed ($writemb_size)    : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)     : " | tee -a $log
 		io2=$( io_test $writemb )
 		echo -e "${YELLOW}$io2${PLAIN}" | tee -a $log
-		echo -n " I/O Speed ($writemb_size)    : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)     : " | tee -a $log
 		io3=$( io_test $writemb )
 		echo -e "${YELLOW}$io3${PLAIN}" | tee -a $log
-		echo -n " I/O Speed ($writemb_size)    : " | tee -a $log
+		echo -n " I/O Speed ($writemb_size)     : " | tee -a $log
 		io4=$( io_test $writemb )
 		echo -e "${YELLOW}$io4${PLAIN}" | tee -a $log
 		ioraw1=$( echo $io1 | awk 'NR==1 {print $1}' )
@@ -763,7 +763,6 @@ bench_all(){
 	about;
 	benchinit;
 	clear
-	next;
 	next;
 	get_system_info;
 	print_system_info;
