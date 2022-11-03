@@ -463,7 +463,7 @@ print_system_info() {
 	echo -e " OS                   : ${SKYBLUE}$opsy ($lbit Bit)${PLAIN}" | tee -a $log
 	echo -e " Kernel               : ${SKYBLUE}$kern${PLAIN}" | tee -a $log
 	echo -e " Total Space          : ${SKYBLUE}$disk_used_size GB / ${YELLOW}$disk_total_size GB ${PLAIN}" | tee -a $log
-	echo -e " Total RAM            : ${SKYBLUE}$uram MB / ${YELLOW}$tram MB ${SKYBLUE}($bram MB Buff)${PLAIN}" | tee -a $log
+	echo -e " Total RAM            : ${SKYBLUE}$uram / ${YELLOW}$tram ${SKYBLUE}($bram MB Buff)${PLAIN}" | tee -a $log
 	echo -e " Total SWAP           : ${SKYBLUE}$uswap MB / $swap MB${PLAIN}" | tee -a $log
 	echo -e " Uptime               : ${SKYBLUE}$up${PLAIN}" | tee -a $log
 	echo -e " Load Average         : ${SKYBLUE}$load${PLAIN}" | tee -a $log
