@@ -169,6 +169,32 @@ next() {
     printf "%-70s\n" "-" | sed 's/\s/-/g' | tee -a $log
 }
 
+calc_size() {
+    local raw=$1
+    local total_size=0
+    local num=1
+    local unit="KB"
+    if ! [[ ${raw} =~ ^[0-9]+$ ]] ; then
+        echo ""
+        return
+    fi
+    if [ "${raw}" -ge 1073741824 ]; then
+        num=1073741824
+        unit="TB"
+    elif [ "${raw}" -ge 1048576 ]; then
+        num=1048576
+        unit="GB"
+    elif [ "${raw}" -ge 1024 ]; then
+        num=1024
+        unit="MB"
+    elif [ "${raw}" -eq 0 ]; then
+        echo "${total_size}"
+        return
+    fi
+    total_size=$( awk 'BEGIN{printf "%.1f", '$raw' / '$num'}' )
+    echo "${total_size} ${unit}"
+}
+
 speed_test(){
 	if [[ $1 == '' ]]; then
 		speedtest-cli/speedtest -p no --accept-license --accept-gdpr > $speedLog 2>&1
