@@ -292,7 +292,7 @@ install_smart() {
 }
 
 ip_info4(){
-	local org="$(wget -q -T10 -O- ipinfo.io/org)"
+    local org="$(wget -q -T10 -O- ipinfo.io/org)"
     local city="$(wget -q -T10 -O- ipinfo.io/city)"
     local country="$(wget -q -T10 -O- ipinfo.io/country)"
     local region="$(wget -q -T10 -O- ipinfo.io/region)"
@@ -475,8 +475,10 @@ get_system_info() {
 	[[ -z "$aes" ]] && aes="${RED}Disabled ${PLAIN}" || aes="${YELLOW}Enabled ${PLAIN}"
 	virt=$( grep -Ei 'vmx|svm' /proc/cpuinfo )
 	[[ -z "$virt" ]] && virt="${RED}Disabled ${PLAIN}" || virt="${YELLOW}Enabled ${PLAIN}"
-	tram=$( free -m | awk '/Mem/ {print $2}' )
-	uram=$( free -m | awk '/Mem/ {print $3}' )
+	tram=$( LANG=C; free | awk '/Mem/ {print $2}' )
+        tram=$( calc_size $tram )
+        uram=$( LANG=C; free | awk '/Mem/ {print $3}' )
+        uram=$( calc_size $uram )
 	bram=$( free -m | awk '/Mem/ {print $6}' )
 	swap=$( free -m | awk '/Swap/ {print $2}' )
 	uswap=$( free -m | awk '/Swap/ {print $3}' )
