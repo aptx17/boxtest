@@ -138,7 +138,7 @@ benchinit() {
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6 ARM..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-LinuxarmPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	fi
