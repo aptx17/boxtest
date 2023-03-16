@@ -822,10 +822,11 @@ bench_all(){
 	next;
 	print_io;
 	next;
-	geekbench;
 	print_china_speedtest;
 	next;
 	print_global_speedtest;
+	next;
+	geekbench;
 	next;
 	print_end_time;
 	next;
