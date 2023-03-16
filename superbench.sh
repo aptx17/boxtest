@@ -541,7 +541,7 @@ geekbench() {
 	if [[ -z "$GEEKBENCH_TEST" ]]; then
 		echo -e " ${RED}Geekbench v${GeekbenchVer} test failed. Run manually to determine cause.${PLAIN}" | tee -a $log
 		GEEKBENCH_URL=''
-		if [[ $GeekbenchVer == *6* && $ARCH != *aarch64* && $ARCH != *arm* ]]; then
+		if [[ $GeekbenchVer == *6* && $ARCH = *x86* ]]; then
 			rm -rf geekbench
 			download_geekbench4;
 			echo -n -e "\r" | tee -a $log
