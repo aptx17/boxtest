@@ -127,14 +127,14 @@ benchinit() {
 	fi
 	GeekbenchVer=6
 	if [[ $ARCH = *x86* ]]; then
-		download_geekbench6;
-		$GeekbenchVer=6
+		download_geekbench4;
+		$GeekbenchVer=4
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6..."
 			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
-		chmod +x ./geekbench/geekbench5
+		chmod +x ./geekbench/geekbench6
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6..."
@@ -241,11 +241,15 @@ print_china_speedtest() {
 	printf "%-18s%-18s%-20s%-12s\n" " Node Name" "Upload Speed" "Download Speed" "Latency" | tee -a $log
         speed_test '' 'Speedtest.net'
         speed_test '3633'  'Shanghai     CT'
-	speed_test '29353' 'Wuhan 5G     CT'
+	speed_test '23844' 'Wuhan 5G     CT'
+	speed_test '27594' 'Guangzhou 5G CT'
         speed_test '26352' 'Nanjing 5G   CT'
+	speed_test '5145'  'Beijing      CU'
 	speed_test '24447' 'Shanghai 5G  CU'
 	speed_test '45170' 'Wu Xi        CU'
+	speed_test '26678' 'Guangzhou 5G CU'
 	speed_test '25637' 'Shanghai 5G  CM'
+	speed_test '27249' 'Nanjing 5G   CM'
 	speed_test '15863' 'Nanning      CM'
 	speed_test '4575'  'Chengdu      CM'
 }
