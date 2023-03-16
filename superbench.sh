@@ -137,7 +137,7 @@ benchinit() {
 		chmod +x ./geekbench/geekbench6
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
-			echo " Installing Geekbench 6..."
+			echo " Installing Geekbench 6 ARM..."
 			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-LinuxarmPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
@@ -541,7 +541,7 @@ geekbench() {
 	if [[ -z "$GEEKBENCH_TEST" ]]; then
 		echo -e " ${RED}Geekbench v${GeekbenchVer} test failed. Run manually to determine cause.${PLAIN}" | tee -a $log
 		GEEKBENCH_URL=''
-		if [[ $GeekbenchVer == *5* && $ARCH != *aarch64* && $ARCH != *arm* ]]; then
+		if [[ $GeekbenchVer == *6* && $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 			rm -rf geekbench
 			download_geekbench4;
 			echo -n -e "\r" | tee -a $log
@@ -552,8 +552,8 @@ geekbench() {
 		GEEKBENCH_URL=$(echo -e $GEEKBENCH_TEST | head -1)
 		GEEKBENCH_URL_CLAIM=$(echo $GEEKBENCH_URL | awk '{ print $2 }')
 		GEEKBENCH_URL=$(echo $GEEKBENCH_URL | awk '{ print $1 }')
-		sleep 20
-		[[ $GeekbenchVer == *5* ]] && GEEKBENCH_SCORES=$(curl -s $GEEKBENCH_URL | grep "div class='score'") || GEEKBENCH_SCORES=$(curl -s $GEEKBENCH_URL | grep "span class='score'")
+		sleep 6
+		[[ $GeekbenchVer == *6* ]] && GEEKBENCH_SCORES=$(curl -s $GEEKBENCH_URL | grep "div class='score'") || GEEKBENCH_SCORES=$(curl -s $GEEKBENCH_URL | grep "span class='score'")
 		GEEKBENCH_SCORES_SINGLE=$(echo $GEEKBENCH_SCORES | awk -v FS="(>|<)" '{ print $3 }')
 		GEEKBENCH_SCORES_MULTI=$(echo $GEEKBENCH_SCORES | awk -v FS="(>|<)" '{ print $7 }')
 		
@@ -822,11 +822,10 @@ bench_all(){
 	next;
 	print_io;
 	next;
+	geekbench;
 	print_china_speedtest;
 	next;
 	print_global_speedtest;
-	next;
-	geekbench;
 	next;
 	print_end_time;
 	next;
