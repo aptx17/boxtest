@@ -125,22 +125,22 @@ benchinit() {
 	if [[ ! -e './geekbench' ]]; then
 		mkdir geekbench
 	fi
-	GeekbenchVer=5
+	GeekbenchVer=6
 	if [[ $ARCH = *x86* ]]; then
-		download_geekbench4;
-		$GeekbenchVer=4
+		download_geekbench6;
+		$GeekbenchVer=6
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
-		if [ ! -e './geekbench/geekbench5' ]; then
-			echo " Installing Geekbench 5..."
-			curl -s https://cdn.geekbench.com/Geekbench-5.4.5-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+		if [ ! -e './geekbench/geekbench6' ]; then
+			echo " Installing Geekbench 6..."
+			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench5
 	else
-		if [ ! -e './geekbench/geekbench5' ]; then
-			echo " Installing Geekbench 5..."
-			curl -s https://cdn.geekbench.com/Geekbench-5.4.4-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+		if [ ! -e './geekbench/geekbench6' ]; then
+			echo " Installing Geekbench 6..."
+			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-LinuxarmPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
-		chmod +x ./geekbench/geekbench5
+		chmod +x ./geekbench/geekbench6
 	fi
 
 	sleep 5
