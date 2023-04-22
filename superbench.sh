@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 SKYBLUE='\033[0;36m'
 PLAIN='\033[0m'
-BrowserUA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+BrowserUA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.5615.135 Safari/537.36"
 
 about() {
 	echo ""
@@ -132,13 +132,13 @@ benchinit() {
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.0.2-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6 ARM..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.0.1-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.0.2-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	fi
