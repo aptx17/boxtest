@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-
-# add deb-src to sources.list
-sed -i "/deb-src/s/# //g" /etc/apt/sources.list
-
 # install dep
 apt update
 apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev
@@ -32,8 +28,3 @@ scripts/config --disable MODULE_SIG
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 make deb-pkg LOCALVERSION=-bbrplus -j"$CPU_CORES"
-
-# move deb packages to publish
-cd ..
-mkdir "publish"
-mv ./*.deb ./publish/
