@@ -31,5 +31,5 @@ jobs:
           git checkout -b release
           git add -A
           git commit -m "${{ env.RELEASE_NAME }}"
-          git remote add bbrplus "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u bbrplus release
+          git remote add boxtest "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u boxtest release
