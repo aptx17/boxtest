@@ -1,0 +1,29 @@
+name: bbrplus
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/bbrplus.yml'
+#  schedule:
+ #   - cron: '00 00 * * *'
+   
+jobs:
+  build:
+    name: Build kernel
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    if: github.repository == 'aptx17/boxtest'     
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: bash build_action.sh
+
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: ${{ github.workspace }}/artifact/
