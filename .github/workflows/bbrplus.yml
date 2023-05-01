@@ -22,8 +22,14 @@ jobs:
       - name: Build
         run: bash build_action.sh
 
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifact
-          path: ${{ github.workspace }}/artifact/
+      - name: Git push assets to "release" branch
+        run: |
+          cd publish || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add -A
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add bbrplus "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u bbrplus release
