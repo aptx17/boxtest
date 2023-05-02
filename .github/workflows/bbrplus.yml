@@ -15,8 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     container: debian:bookworm   
     steps:
+      - name: Set variables
+        run: |
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        shell: bash
+        
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Build
         run: |
@@ -27,16 +35,16 @@ jobs:
           ls
           mkdir -p publish
           mv ./*.deb ./publish/
-          ls
 
       - name: Git push assets to "release" branch
         run: |
           cd publish || exit 1
-          git init
+          ls
           git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions@github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git init
           git checkout -b release
           git add -A
-          git commit -m "RELEASE"
+          git commit -m "${{ env.RELEASE_NAME }}"
           git remote add boxtest "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u boxtest release
