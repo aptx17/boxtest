@@ -35,6 +35,11 @@ jobs:
           mkdir -p publish
           mv ./*.deb ./publish/
 
+      - name: change dir to workplace
+        run: |
+          cd "${GITHUB_WORKSPACE}" || exit
+          ls
+          
       - name: Git push assets to "release" branch
         run: |
           cd publish || exit 1
