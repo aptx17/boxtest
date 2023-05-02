@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install dep
+# install dep 
 apt update
 apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev
 apt build-dep -y linux
