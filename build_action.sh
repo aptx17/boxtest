@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # install dep 
 apt update
-apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev
+apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev git
 apt build-dep -y linux
 
 # change dir to workplace
