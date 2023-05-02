@@ -40,9 +40,9 @@ jobs:
         run: |
           cd publish || exit 1
           ls
+          git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git init
           git checkout -b release
           git add -A
           git commit -m "${{ env.RELEASE_NAME }}"
