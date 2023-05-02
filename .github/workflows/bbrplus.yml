@@ -32,7 +32,6 @@ jobs:
         
       - name: move deb packages to publish
         run: |
-          ls
           mkdir -p publish
           mv ./*.deb ./publish/
 
