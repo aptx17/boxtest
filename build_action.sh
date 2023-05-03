@@ -4,9 +4,6 @@ apt update
 apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev git
 apt build-dep -y linux
 
-# change dir to workplace
-#cd "${GITHUB_WORKSPACE}" || exit
-
 # download kernel source
 wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.27.tar.xz
 tar -xf linux-6.1.27.tar.xz
