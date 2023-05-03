@@ -51,11 +51,11 @@ diff -ruaN a/net/ipv4/Kconfig b/net/ipv4/Kconfig
 +          Same as BBR, requires the fq ("Fair Queue") pacing packet scheduler.
 +
  choice
- 	prompt "Default TCP congestion control"
-  default DEFAULT_CUBIC
- 	help
- 	  Select the TCP congestion control that will be used by default
- 	  for all connections.
+	prompt "Default TCP congestion control"
+	default DEFAULT_CUBIC
+	help
+	  Select the TCP congestion control that will be used by default
+	  for all connections.
 @@ -715,6 +724,9 @@
  	config DEFAULT_BBR
  		bool "BBR" if TCP_CONG_BBR=y
