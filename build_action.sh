@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # install dep 
 apt update
-apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev git
+apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev git gcc-multilib g++-multilib python3 python3-pip python3-ply
 apt build-dep -y linux
 
 # download kernel source
