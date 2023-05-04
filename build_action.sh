@@ -10,8 +10,8 @@ tar -xf linux-6.1.27.tar.xz
 cd linux-6.1.27 || exit
 
 # apply patches
-cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
-patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
+#cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
+#patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
 
 # config
 cp ../config .config
@@ -24,4 +24,4 @@ scripts/config --disable MODULE_SIG
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-make deb-pkg LOCALVERSION=-bbrplus -j"$CPU_CORES"
+make deb-pkg -j"$CPU_CORES"
