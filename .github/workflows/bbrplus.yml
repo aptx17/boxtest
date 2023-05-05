@@ -12,8 +12,7 @@ on:
 jobs:
   build:
     name: Build kernel
-    runs-on: ubuntu-latest
-    container: debian:bookworm   
+    runs-on: ubuntu-latest   
     steps:
       - name: Checkout
         uses: actions/checkout@v3
