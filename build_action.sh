@@ -15,7 +15,7 @@ cd linux-6.1.27 || exit
 
 # config
 cp ../config .config
-make oldconfig
+make config
 
 # disable debug info & module signing
 scripts/config --disable SECURITY_LOCKDOWN_LSM
