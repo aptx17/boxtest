@@ -36,6 +36,6 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
           git add -A
-          git commit -m "built"
+          git commit -m "bbr"
           git remote add boxtest "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u boxtest release
