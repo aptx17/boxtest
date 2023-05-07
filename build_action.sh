@@ -10,12 +10,12 @@ tar -xf linux-6.1.27.tar.xz
 cd linux-6.1.27 || exit
 
 # apply patches
-#cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
-#patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
+cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
+patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
 
 # config
 cp ../config .config
-make config
+make oldconfig
 
 # disable debug info & module signing
 scripts/config --disable SECURITY_LOCKDOWN_LSM
