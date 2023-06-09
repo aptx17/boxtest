@@ -5,9 +5,9 @@ apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio lib
 apt build-dep -y linux
 
 # download kernel source
-wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.27.tar.xz
-tar -xf linux-6.1.27.tar.xz
-cd linux-6.1.27 || exit
+wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.33.tar.xz
+tar -xf linux-6.1.33.tar.xz
+cd linux-6.1.33 || exit
 
 # apply patches
 cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
