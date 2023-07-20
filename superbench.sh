@@ -459,7 +459,7 @@ print_io() {
 
 print_system_info() {
 	echo -e " CPU Model            : ${SKYBLUE}$cname${PLAIN}" | tee -a $log
-	echo -e " CPU Model            : ${SKYBLUE}$cname2${PLAIN}" | tee -a $log
+	echo -e " BIOS Model           : ${SKYBLUE}$cname2${PLAIN}" | tee -a $log
 	echo -e " CPU Cores            : ${YELLOW}$cores Cores ${SKYBLUE}$freq MHz $arch${PLAIN}" | tee -a $log
 	echo -e " CPU Cache            : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
 	echo -e " AES-NI               : $aes" | tee -a $log
