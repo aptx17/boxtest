@@ -461,7 +461,7 @@ print_system_info() {
 	echo -e " CPU Model            : ${SKYBLUE}$cname${PLAIN}" | tee -a $log
 	echo -e " BIOS Model           : ${SKYBLUE}$cname2${PLAIN}" | tee -a $log
 	echo -e " CPU Cores            : ${YELLOW}$cores Cores ${SKYBLUE}$freq MHz $arch${PLAIN}" | tee -a $log
-	echo -e " CPU Cache            : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
+	echo -e " L3 Cache             : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
 	echo -e " AES-NI               : $aes" | tee -a $log
 	echo -e " VM-x/AMD-V           : $virt" | tee -a $log
 	echo -e " Virtualization       : ${YELLOW}$virtual${PLAIN}" | tee -a $log
@@ -502,7 +502,7 @@ get_system_info() {
         cname2=$( lscpu | grep 'BIOS Model name' | head -1 | sed 's/BIOS Model name: *//g' )
 	cores=$( awk -F: '/processor/ {core++} END {print core}' /proc/cpuinfo )
 	freq=$( awk -F'[ :]' '/cpu MHz/ {print $4;exit}' /proc/cpuinfo )
-	corescache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
+	corescache=$( lscpu | grep 'L3' | head -1 | sed 's/L3 cache: *//g' )
 	aes=$(grep -i 'aes' /proc/cpuinfo)
 	[[ -z "$aes" ]] && aes="${RED}Disabled ${PLAIN}" || aes="${YELLOW}Enabled ${PLAIN}"
 	virt=$( grep -Ei 'vmx|svm' /proc/cpuinfo )
