@@ -459,7 +459,7 @@ print_io() {
 
 print_system_info() {
 	echo -e " CPU Model            : ${SKYBLUE}$cname${PLAIN}" | tee -a $log
-                                       :
+	echo -e " CPU Model            : ${SKYBLUE}$cname2${PLAIN}" | tee -a $log
 	echo -e " CPU Cores            : ${YELLOW}$cores Cores ${SKYBLUE}$freq MHz $arch${PLAIN}" | tee -a $log
 	echo -e " CPU Cache            : ${SKYBLUE}$corescache ${PLAIN}" | tee -a $log
 	echo -e " AES-NI               : $aes" | tee -a $log
@@ -498,7 +498,8 @@ print_end_time() {
 }
 
 get_system_info() {
-	cname=$( lscpu | grep "Model name" | sed 's/Model name: *//g' )
+	cname=$( lscpu | grep 'Model name' | head -1 | sed 's/Model name: *//g' )
+        cname2=$( lscpu | grep 'BIOS Model name' | head -1 | sed 's/BIOS Model name: *//g' )
 	cores=$( awk -F: '/processor/ {core++} END {print core}' /proc/cpuinfo )
 	freq=$( awk -F'[ :]' '/cpu MHz/ {print $4;exit}' /proc/cpuinfo )
 	corescache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
