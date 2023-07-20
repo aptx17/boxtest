@@ -132,13 +132,13 @@ benchinit() {
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.0.2-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.1.0-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6 ARM..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.0.2-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.1.0-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	fi
@@ -618,34 +618,6 @@ function UnlockYouTubePremiumTest() {
     fi
 }
 
-function YouTubeCDNTest() {
-	local tmpresult=$(curl -sS --max-time 10 https://redirector.googlevideo.com/report_mapping 2>&1)    
-    if [[ "$tmpresult" == "curl"* ]];then
-        echo -e " YouTube Region       : ${RED}Network connection failed${PLAIN}" | tee -a $log
-        return;
-    fi
-	iata=$(echo $tmpresult | grep router | cut -f2 -d'"' | cut -f2 -d"." | sed 's/.\{2\}$//' | tr [:lower:] [:upper:])
-	checkfailed=$(echo $tmpresult | grep "=>")
-	if [ -z "$iata" ] && [ -n "$checkfailed" ];then
-		CDN_ISP=$(echo $checkfailed | awk '{print $3}' | cut -f1 -d"-" | tr [:lower:] [:upper:])
-		echo -e " YouTube CDN          : ${YELLOW}Associated with $CDN_ISP${PLAIN}" | tee -a $log
-		return;
-	elif [ -n "$iata" ];then
-		curl $useNIC -s --max-time 10 "https://www.iata.org/AirportCodesSearch/Search?currentBlock=314384&currentPage=12572&airport.search=${iata}" > ~/iata.txt
-		local line=$(cat ~/iata.txt | grep -n "<td>"$iata | awk '{print $1}' | cut -f1 -d":")
-		local nline=$(expr $line - 2)
-		local location=$(cat ~/iata.txt | awk NR==${nline} | sed 's/.*<td>//' | cut -f1 -d"<")
-		echo -e " YouTube CDN          : ${GREEN}$location${PLAIN}" | tee -a $log
-		rm ~/iata.txt
-		return;
-	else
-		echo -e " YouTube CDN          : ${RED}Undetectable${PLAIN}" | tee -a $log
-		rm ~/iata.txt
-		return;
-	fi
-	
-}
-
 function UnlockBilibiliTest() {
 	#Test Mainland
     local randsession="$(cat /dev/urandom | head -n 32 | md5sum | head -c 32)";
@@ -766,7 +738,6 @@ function StreamingMediaUnlockTest(){
 	echo -e " Stream Media Unlock  :" | tee -a $log
 	UnlockNetflixTest
 	UnlockYouTubePremiumTest
-	YouTubeCDNTest
 	UnlockBilibiliTest
 	UnlockTiktokTest
 	UnlockiQiyiIntlTest
