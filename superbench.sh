@@ -132,13 +132,13 @@ benchinit() {
 	elif [[ $ARCH != *aarch64* && $ARCH != *arm* ]]; then
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.1.0-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.2.1-Linux.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	else
 		if [ ! -e './geekbench/geekbench6' ]; then
 			echo " Installing Geekbench 6 ARM..."
-			curl -s https://cdn.geekbench.com/Geekbench-6.1.0-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
+			curl -s https://cdn.geekbench.com/Geekbench-6.2.1-LinuxARMPreview.tar.gz  | tar xz --strip-components=1 -C ./geekbench &>/dev/null
 		fi
 		chmod +x ./geekbench/geekbench6
 	fi
