@@ -7,7 +7,7 @@ apt build-dep -y linux
 # download kernel source
 wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.66.tar.xz
 tar -xf linux-6.1.66.tar.xz
-cd linux-6.1.33 || exit
+cd linux-6.1.66 || exit
 
 # apply patches
 cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
