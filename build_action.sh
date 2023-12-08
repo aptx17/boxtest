@@ -13,8 +13,12 @@ cd linux-6.1.66 || exit
 cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch .
 patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
 
-# config
-cp ../config .config
+# x86-config
+#cp ../config .config
+#make oldconfig
+
+# ARM-config
+cp ../armconfig .config
 make oldconfig
 
 # disable debug info & module signing
