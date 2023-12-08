@@ -1,0 +1,41 @@
+name: arm-bbrplus
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/arm-bbrplus.yml'
+#  schedule:
+ #   - cron: '00 00 * * *'
+   
+jobs:
+  build:
+    name: Build kernel
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          bash build_action.sh
+        
+      - name: move deb packages to publish
+        run: |
+          mkdir -p publish
+          mv ./*.deb ./publish/
+          
+      - name: Git push assets to "release" branch
+        run: |
+          cd publish || exit 1
+          ls
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release-arm-6.1.66
+          git add -A
+          git commit -m "bbrplus"
+          git remote add boxtest "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u boxtest release-arm-6.1.66
