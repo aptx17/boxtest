@@ -20,7 +20,7 @@ jobs:
 
       - name: Build
         run: |
-          bash build_action.sh
+          bash build_action_arm.sh
         
       - name: move deb packages to publish
         run: |
