@@ -21,7 +21,7 @@ make oldconfig
 scripts/config --disable SECURITY_LOCKDOWN_LSM
 scripts/config --disable DEBUG_INFO
 scripts/config --disable MODULE_SIG
-scripts/config --disable CONFIG_SLUB_DEBUG
+#scripts/config --disable CONFIG_SLUB_DEBUG
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 make deb-pkg -j"$CPU_CORES"
