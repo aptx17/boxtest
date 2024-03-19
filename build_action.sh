@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# add deb-src to sources.list
-sed -i "/deb-src/s/# //g" /etc/apt/sources.list
 
 # install dep 
 apt update
