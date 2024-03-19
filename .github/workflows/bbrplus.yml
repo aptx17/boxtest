@@ -26,7 +26,19 @@ jobs:
         remove-codeql: 'true'
     - name: Checkout
       uses: actions/checkout@main
-
+    - name: Init build dependencies
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo swapoff -a
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt update
+        sudo -E apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb-release git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply
+        sudo -E apt build-dep -y linux
+        sudo -E apt autoremove --purge
+        sudo -E apt clean
+        sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
+        sudo -E git config --global core.abbrev auto
     - name: Build
       run: |
           bash build_action.sh
