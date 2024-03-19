@@ -11,34 +11,33 @@ on:
    
 jobs:
   build:
-    name: Build kernel
     runs-on: ubuntu-latest
     container: debian:bookworm
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          root-reserve-mb: 2048
-          temp-reserve-mb: 128
-          swap-size-mb: 512
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@master
+      with:
+        swap-size-mb: 512
+        temp-reserve-mb: 128
+        root-reserve-mb: 2000
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Build
-        run: |
+    - name: Build
+      run: |
           bash build_action.sh
         
-      - name: move deb packages to publish
-        run: |
+    - name: move deb packages to publish
+      run: |
           mkdir -p publish
           mv ./*.deb ./publish/
           
-      - name: Git push assets to "release" branch
-        run: |
+    - name: Git push assets to "release" branch
+      run: |
           cd publish || exit 1
           ls
           git init
