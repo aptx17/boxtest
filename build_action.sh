@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# add deb-src to sources.list
+sed -i "/deb-src/s/# //g" /etc/apt/sources.list
+
 # install dep 
 apt update
 apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb-release git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply
