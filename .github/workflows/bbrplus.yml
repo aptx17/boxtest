@@ -12,7 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: debian:bookworm
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
     - name: Maximize build space
@@ -26,7 +25,7 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@main
 
     - name: Build
       run: |
