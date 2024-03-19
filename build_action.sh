@@ -14,7 +14,7 @@ cp ../convert_official_linux-6.6.x_src_to_bbrplus.patch .
 patch -p1 < convert_official_linux-6.6.x_src_to_bbrplus.patch
 
 # x86-config
-#cp ../config .config
+cp -f ../config .config
 make oldconfig
 
 # disable debug info & module signing
