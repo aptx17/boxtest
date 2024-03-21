@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# add deb-src to sources.list
+sed -i "/deb-src/s/# //g" /etc/apt/sources.list
+
 sudo apt build-dep -y linux
 
 # download kernel source
