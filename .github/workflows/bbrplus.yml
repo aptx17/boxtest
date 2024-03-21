@@ -13,10 +13,10 @@ jobs:
   build:
     name: Build kernel
     runs-on: ubuntu-latest
-    container: debian:bookworm
+    if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
 
       - name: Build
         run: |
