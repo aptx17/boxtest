@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-apt build-dep -y linux
+sudo apt build-dep -y linux
 
 # download kernel source
 wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.22.tar.xz
@@ -11,7 +11,7 @@ cp ../convert_official_linux-6.6.x_src_to_bbrplus.patch ./
 patch -p1 < convert_official_linux-6.6.x_src_to_bbrplus.patch
 
 # x86-config
-cp -f ../.config ./
+sudo cp -f ../.config ./
 make oldconfig
 
 # disable debug info & module signing
