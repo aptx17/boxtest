@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# install dep 
-apt update -y
-apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb-release git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply
-apt build-dep -y linux
 
 # download kernel source
 wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.22.tar.xz
