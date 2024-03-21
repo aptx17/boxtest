@@ -13,10 +13,21 @@ jobs:
   build:
     name: Build kernel
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 4096
+          swap-size-mb: 512
+          remove-dotnet: 'true'
+          remove-android: 'true'
       - name: Checkout
         uses: actions/checkout@main
+
+      - name: install dep
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig
 
       - name: Build
         run: |
