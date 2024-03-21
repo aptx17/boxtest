@@ -7,48 +7,28 @@ on:
     paths:
       - '.github/workflows/bbrplus.yml'
 #  schedule:
- #   - cron: '00 01 * * *'
+ #   - cron: '00 00 * * *'
    
 jobs:
   build:
+    name: Build kernel
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    container: debian:bookworm
     steps:
-    - name: Maximize build space
-      uses: easimon/maximize-build-space@master
-      with:
-        swap-size-mb: 512
-        temp-reserve-mb: 128
-        root-reserve-mb: 4096
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-    - name: Checkout
-      uses: actions/checkout@main
-    - name: Init build dependencies
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo swapoff -a
-        sudo -E apt update -y
-        sudo -E apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb-release git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply
-        sudo -E apt build-dep -y linux
-        sudo -E apt autoremove -y --purge
-        sudo -E apt clean
-        sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
-        sudo -E git config --global core.abbrev auto
-    - name: Build
-      run: |
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
           bash build_action.sh
         
-    - name: move deb packages to publish
-      run: |
+      - name: move deb packages to publish
+        run: |
           mkdir -p publish
           mv ./*.deb ./publish/
           
-    - name: Git push assets to "release" branch
-      run: |
+      - name: Git push assets to "release" branch
+        run: |
           cd publish || exit 1
           ls
           git init
