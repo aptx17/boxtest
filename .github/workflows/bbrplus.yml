@@ -28,6 +28,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt install -y curl wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-tk debhelper dpkg-sig
+      
       - name: Build
         run: |
           bash build_action.sh
