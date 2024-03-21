@@ -13,14 +13,8 @@ jobs:
   build:
     name: Build kernel
     runs-on: ubuntu-latest
+    container: debian:bookworm
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          root-reserve-mb: 4096
-          swap-size-mb: 512
-          remove-dotnet: 'true'
-          remove-android: 'true'
       - name: Checkout
         uses: actions/checkout@main
 
