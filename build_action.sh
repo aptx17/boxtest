@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-sed -i "/deb-src/s/# //g" /etc/apt/sources.list.d/*
+ls /etc/apt/
+cat /etc/apt/sources.list
 # install dep 
 apt update -y
 apt install -y wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev libelf-dev apt-utils lsb-release git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply
