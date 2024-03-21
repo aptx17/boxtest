@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # add deb-src to sources.list
-sed -i "/deb-src/s/# //g" /etc/apt/sources.list
+sudo -E sed -i "/deb-src/s/# //g" /etc/apt/sources.list
 
-sudo apt build-dep -y linux
+sudo -E apt build-dep -y linux
 
 # download kernel source
 wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.22.tar.xz
