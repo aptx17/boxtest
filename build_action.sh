@@ -6,7 +6,7 @@ apt install -y wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod c
 apt build-dep -y linux
 
 # download kernel source
-wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.22.tar.xz
+wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.44.tar.xz
 tar -xf linux-6.6.44.tar.xz
 cd linux-6.6.44 || exit
 
