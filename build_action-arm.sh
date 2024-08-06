@@ -2,7 +2,7 @@
 
 # install dep
 apt update -y
-apt install -y wget jq gpg xz-utils make gcc flex bison dpkg-dev bc u-boot-tools dpkg-dev kernel-package gcc-arm-linux-gnueabihf rsync kmod cpio libssl-dev libelf-dev apt-utils git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply debhelper
+apt install -y wget jq gpg xz-utils make gcc fakeroot crossbuild-essential-arm64 flex bison dpkg-dev bc u-boot-tools dpkg-dev kernel-package gcc-arm-linux-gnueabihf rsync kmod cpio libssl-dev libelf-dev apt-utils git build-essential libncurses5-dev gcc-multilib g++-multilib python3 python3-pip python3-ply debhelper
 apt build-dep -y linux
 
 # download kernel source
