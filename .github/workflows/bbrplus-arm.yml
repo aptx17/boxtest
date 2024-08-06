@@ -20,13 +20,13 @@ jobs:
         uses: actions/checkout@main
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with: 
           platforms: arm
 
       - name: Build
         run: |
-          bash build_action-arm.sh
+          sudo bash build_action-arm.sh
         
       - name: move deb packages to publish
         run: |
