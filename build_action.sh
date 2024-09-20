@@ -25,4 +25,4 @@ scripts/config --disable MODULE_SIG
 scripts/config --disable CONFIG_SLUB_DEBUG
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-make bindeb-pkg -j"$CPU_CORES" LOCALVERSION=-custom
+make deb-pkg -j"$CPU_CORES"
