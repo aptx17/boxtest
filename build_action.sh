@@ -6,13 +6,13 @@ apt install -y wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod c
 apt build-dep -y linux
 
 # download kernel source
-wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.111.tar.xz
-tar -xf linux-6.1.111.tar.xz
-cd linux-6.1.111 || exit
+wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.63.tar.xz
+tar -xf linux-6.6.63.tar.xz
+cd linux-6.6.63 || exit
 
 # apply patches
-cp ../convert_official_linux-6.1.x_src_to_bbrplus.patch ./
-patch -p1 < convert_official_linux-6.1.x_src_to_bbrplus.patch
+cp ../convert_official_linux-6.6.x_src_to_bbrplus.patch ./
+patch -p1 < convert_official_linux-6.6.x_src_to_bbrplus.patch
 
 # x86-config
 cp -f ../.config ./
@@ -25,4 +25,4 @@ scripts/config --disable MODULE_SIG
 scripts/config --disable CONFIG_SLUB_DEBUG
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-make deb-pkg -j"$CPU_CORES"
+make bindeb-pkg -j"$CPU_CORES"
