@@ -26,10 +26,13 @@ jobs:
           set -euxo pipefail
 
           apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            bc bison build-essential cpio flex gcc-aarch64-linux-gnu \
-            git libelf-dev libncurses-dev libssl-dev make patch \
-            python3 rsync wget xz-utils ca-certificates
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio \
+             libssl-dev libelf-dev apt-utils git build-essential libncurses5-dev \
+             gcc-multilib g++-multilib python3 python3-pip python3-ply debhelper \
+             ca-certificates
+          
+          apt-get build-dep -y linux
 
           wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.191.tar.xz
           tar -xf linux-6.1.191.tar.xz
