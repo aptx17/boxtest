@@ -1,4 +1,4 @@
-name: bbrplus
+name: bbrplus-arm64
 
 on:
   push:
@@ -6,36 +6,66 @@ on:
       - main
     paths:
       - '.github/workflows/bbrplus.yml'
-#  schedule:
- #   - cron: '00 00 * * *'
-   
+  # schedule:
+  #   - cron: '00 00 * * *'
+
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: Build kernel
+    name: Build ARM64 kernel
     runs-on: ubuntu-latest
     container: debian:13
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
-      - name: Build
+      - name: Build ARM64 kernel packages
         run: |
-          bash build_action.sh
-        
-      - name: move deb packages to publish
+          set -euxo pipefail
+
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            bc bison build-essential cpio flex gcc-aarch64-linux-gnu \
+            git libelf-dev libncurses-dev libssl-dev make patch \
+            python3 rsync wget xz-utils
+
+          wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.161.tar.xz
+          tar -xf linux-6.6.161.tar.xz
+          cd linux-6.6.161
+
+          patch -p1 < ../convert_official_linux-6.6.x_src_to_bbrplus.patch
+
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make defconfig
+          scripts/config --enable TCP_CONG_BBRPLUS
+          scripts/config --enable DEFAULT_BBRPLUS
+          scripts/config --disable DEBUG_INFO
+          scripts/config --disable MODULE_SIG
+          scripts/config --disable SLUB_DEBUG
+          make olddefconfig
+
+          KBUILD_DEBARCH=arm64 make bindeb-pkg -j"$(nproc)"
+
+      - name: Move ARM64 deb packages to publish
         run: |
+          set -euxo pipefail
           mkdir -p publish
-          mv ./*.deb ./publish/
-          
-      - name: Git push assets to "release" branch
+          find . -maxdepth 1 -type f -name '*.deb' -exec mv -t publish {} +
+          test -n "$(find publish -maxdepth 1 -type f -name '*.deb' -print -quit)"
+
+      - name: Push ARM64 packages to release branch
         run: |
-          cd publish || exit 1
-          ls
+          set -euxo pipefail
+          cd publish
+          ls -lh
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release-6.6.161
+          git checkout -b release-6.6.161-arm64
           git add -A
-          git commit -m "bbrplus"
-          git remote add boxtest "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u boxtest release-6.6.161
+          git commit -m "bbrplus arm64"
+          git remote add boxtest "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u boxtest release-6.6.161-arm64
