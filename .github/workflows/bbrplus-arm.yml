@@ -28,7 +28,9 @@ jobs:
           sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/debian.sources
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio \
+             gcc-aarch64-linux-gnu \
+             binutils-aarch64-linux-gnu \
+             wget jq gpg xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio \
              libssl-dev libelf-dev apt-utils git build-essential libncurses5-dev \
              gcc-multilib g++-multilib python3 python3-pip python3-ply debhelper \
              ca-certificates
