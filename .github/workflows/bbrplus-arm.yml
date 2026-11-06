@@ -1,0 +1,72 @@
+name: bbrplus-arm
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/bbrplus-arm.yml'
+  # schedule:
+  #   - cron: '00 00 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ARM kernel
+    runs-on: ubuntu-latest
+    container: debian:13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build ARM kernel packages
+        run: |
+          set -euxo pipefail
+
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            bc bison build-essential cpio flex gcc-aarch64-linux-gnu \
+            git libelf-dev libncurses-dev libssl-dev make patch \
+            python3 rsync wget xz-utils
+
+          wget -q https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.191.tar.xz
+          tar -xf linux-6.6.191.tar.xz
+          cd linux-6.6.191
+
+          patch -p1 < ../convert_official_linux-6.6.x_src_to_bbrplus.patch
+
+          export ARCH=arm64
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          make defconfig
+          scripts/config --enable TCP_CONG_BBRPLUS
+          scripts/config --enable DEFAULT_BBRPLUS
+          scripts/config --disable SECURITY_LOCKDOWN_LSM
+          scripts/config --disable DEBUG_INFO
+          scripts/config --disable MODULE_SIG
+          scripts/config --disable SLUB_DEBUG
+          make olddefconfig
+
+          KBUILD_DEBARCH=arm64 make bindeb-pkg -j"$(nproc)"
+
+      - name: Move ARM deb packages to publish
+        run: |
+          set -euxo pipefail
+          mkdir -p publish
+          find . -maxdepth 1 -type f -name '*.deb' -exec mv -t publish {} +
+          test -n "$(find publish -maxdepth 1 -type f -name '*.deb' -print -quit)"
+
+      - name: Push ARM packages to release branch
+        run: |
+          set -euxo pipefail
+          cd publish
+          ls -lh
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release-6.6.191-arm
+          git add -A
+          git commit -m "bbrplus arm"
+          git remote add boxtest "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u boxtest release-6.6.191-arm
