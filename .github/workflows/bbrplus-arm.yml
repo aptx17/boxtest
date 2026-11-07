@@ -28,6 +28,7 @@ jobs:
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
              binutils-aarch64-linux-gnu \
+             libc6-dev-arm64-cross \
              bc bison build-essential ca-certificates cpio debhelper dpkg-dev \
              dwarves fakeroot flex gcc-aarch64-linux-gnu git kmod \
              libelf-dev libncurses-dev libssl-dev make patch perl python3 python3-ply \
@@ -65,13 +66,13 @@ jobs:
           scripts/config --disable SLUB_DEBUG
           make olddefconfig
 
-          grep -Fxq 'CONFIG_TCP_CONG_ADVANCED=y' .config
-          grep -Fxq 'CONFIG_TCP_CONG_BBR=y' .config
-          grep -Fxq 'CONFIG_TCP_CONG_BBRPLUS=y' .config
-          grep -Fxq 'CONFIG_DEFAULT_BBRPLUS=y' .config
-          grep -Fxq 'CONFIG_DEFAULT_TCP_CONG="bbrplus"' .config
-          grep -Fxq 'CONFIG_NET_SCHED=y' .config
-          grep -Fxq 'CONFIG_NET_SCH_FQ=y' .config
+          grep -Fx 'CONFIG_TCP_CONG_ADVANCED=y' .config
+          grep -Fx 'CONFIG_TCP_CONG_BBR=y' .config
+          grep -Fx 'CONFIG_TCP_CONG_BBRPLUS=y' .config
+          grep -Fx 'CONFIG_DEFAULT_BBRPLUS=y' .config
+          grep -Fx 'CONFIG_DEFAULT_TCP_CONG="bbrplus"' .config
+          grep -Fx 'CONFIG_NET_SCHED=y' .config
+          grep -Fx 'CONFIG_NET_SCH_FQ=y' .config
 
           KBUILD_DEBARCH=arm64 make deb-pkg -j"$CPU_CORES"
 
