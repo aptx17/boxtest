@@ -49,31 +49,12 @@ jobs:
           export CROSS_COMPILE=aarch64-linux-gnu-
           export CPU_CORES="${CPU_CORES:-$(nproc)}"
 
-          make defconfig
-          cat >> .config <<'EOF'
-          CONFIG_TCP_CONG_ADVANCED=y
-          CONFIG_TCP_CONG_BBR=y
-          CONFIG_TCP_CONG_BBRPLUS=y
-          # CONFIG_DEFAULT_BBR is not set
-          CONFIG_DEFAULT_BBRPLUS=y
-          # CONFIG_DEFAULT_RENO is not set
-          CONFIG_DEFAULT_TCP_CONG="bbrplus"
-          CONFIG_NET_SCHED=y
-          CONFIG_NET_SCH_FQ=y
-          EOF
+          cp -f ../arm/.config ./
+          make oldconfig
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
           scripts/config --disable MODULE_SIG
           scripts/config --disable SLUB_DEBUG
-          make olddefconfig
-
-          grep -Fx 'CONFIG_TCP_CONG_ADVANCED=y' .config
-          grep -Fx 'CONFIG_TCP_CONG_BBR=y' .config
-          grep -Fx 'CONFIG_TCP_CONG_BBRPLUS=y' .config
-          grep -Fx 'CONFIG_DEFAULT_BBRPLUS=y' .config
-          grep -Fx 'CONFIG_DEFAULT_TCP_CONG="bbrplus"' .config
-          grep -Fx 'CONFIG_NET_SCHED=y' .config
-          grep -Fx 'CONFIG_NET_SCH_FQ=y' .config
 
           KBUILD_DEBARCH=arm64 make deb-pkg -j"$CPU_CORES"
 
