@@ -61,7 +61,7 @@ jobs:
           make olddefconfig
 
           grep -E 'CONFIG_(LOCALVERSION|TCP_CONG_BBR|TCP_CONG_BBRPLUS|DEFAULT_BBRPLUS|DEFAULT_TCP_CONG)' .config || true
-          KBUILD_DEBARCH=arm64 make bindeb-pkg -j"$CPU_CORES"
+          KBUILD_DEBARCH=arm64 make deb-pkg -j"$CPU_CORES"
 
       - name: Move ARM deb packages to publish
         run: |
@@ -78,8 +78,8 @@ jobs:
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release-6.1.191-arm
+          git checkout -b release-6.1.191-arm64
           git add -A
           git commit -m "bbrplus arm"
           git remote add boxtest "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u boxtest release-6.1.191-arm
+          git push -f -u boxtest release-6.1.191-arm64
