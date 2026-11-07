@@ -28,10 +28,11 @@ jobs:
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
              binutils-aarch64-linux-gnu \
-             libc6-dev-arm64-cross \
+             g++-aarch64-linux-gnu \
              bc bison build-essential ca-certificates cpio debhelper dpkg-dev \
-             dwarves fakeroot flex gcc-aarch64-linux-gnu git kmod \
-             libelf-dev libncurses-dev libssl-dev make patch perl python3 python3-ply \
+             dwarves fakeroot flex gcc-aarch64-linux-gnu \
+             libc6-dev-arm64-cross \
+             git kmod libelf-dev libncurses-dev libssl-dev libzstd-dev make patch perl python3 python3-ply \
              rsync wget xz-utils
 
       - name: Build ARM kernel packages
