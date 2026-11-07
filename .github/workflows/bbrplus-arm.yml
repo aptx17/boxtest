@@ -48,19 +48,29 @@ jobs:
           export CPU_CORES="${CPU_CORES:-$(nproc)}"
 
           make defconfig
-          scripts/config --set-str LOCALVERSION "-bbrplus"
-          scripts/config --enable TCP_CONG_BBR
-          scripts/config --enable TCP_CONG_BBRPLUS
-          scripts/config --disable DEFAULT_BBR
-          scripts/config --enable DEFAULT_BBRPLUS
-          scripts/config --set-str DEFAULT_TCP_CONG "bbrplus"
+          cat >> .config <<'EOF'
+CONFIG_LOCALVERSION="-bbrplus"
+CONFIG_TCP_CONG_BBR=y
+CONFIG_TCP_CONG_BBRPLUS=y
+# CONFIG_DEFAULT_BBR is not set
+CONFIG_DEFAULT_BBRPLUS=y
+# CONFIG_DEFAULT_RENO is not set
+CONFIG_DEFAULT_TCP_CONG="bbrplus"
+EOF
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
           scripts/config --disable MODULE_SIG
           scripts/config --disable SLUB_DEBUG
           make olddefconfig
 
-          grep -E 'CONFIG_(LOCALVERSION|TCP_CONG_BBR|TCP_CONG_BBRPLUS|DEFAULT_BBRPLUS|DEFAULT_TCP_CONG)' .config || true
+          grep -Fxq 'CONFIG_LOCALVERSION="-bbrplus"' .config
+          grep -Fxq 'CONFIG_TCP_CONG_BBR=y' .config
+          grep -Fxq 'CONFIG_TCP_CONG_BBRPLUS=y' .config
+          grep -Fxq 'CONFIG_DEFAULT_BBRPLUS=y' .config
+          grep -Fxq 'CONFIG_DEFAULT_TCP_CONG="bbrplus"' .config
+          grep -Fxq '# CONFIG_DEFAULT_BBR is not set' .config
+          grep -Fxq '# CONFIG_DEFAULT_RENO is not set' .config
+
           KBUILD_DEBARCH=arm64 make deb-pkg -j"$CPU_CORES"
 
       - name: Move ARM deb packages to publish
