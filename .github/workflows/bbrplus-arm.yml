@@ -49,16 +49,16 @@ jobs:
 
           make defconfig
           cat >> .config <<'EOF'
-CONFIG_TCP_CONG_ADVANCED=y
-CONFIG_TCP_CONG_BBR=y
-CONFIG_TCP_CONG_BBRPLUS=y
-# CONFIG_DEFAULT_BBR is not set
-CONFIG_DEFAULT_BBRPLUS=y
-# CONFIG_DEFAULT_RENO is not set
-CONFIG_DEFAULT_TCP_CONG="bbrplus"
-CONFIG_NET_SCHED=y
-CONFIG_NET_SCH_FQ=y
-EOF
+           CONFIG_TCP_CONG_ADVANCED=y
+           CONFIG_TCP_CONG_BBR=y
+           CONFIG_TCP_CONG_BBRPLUS=y
+           # CONFIG_DEFAULT_BBR is not set
+           CONFIG_DEFAULT_BBRPLUS=y
+           # CONFIG_DEFAULT_RENO is not set
+           CONFIG_DEFAULT_TCP_CONG="bbrplus"
+           CONFIG_NET_SCHED=y
+           CONFIG_NET_SCH_FQ=y
+            EOF
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
           scripts/config --disable MODULE_SIG
@@ -90,8 +90,8 @@ EOF
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release-6.1.191-arm64
+          git checkout -b release-6.1.191-arm
           git add -A
           git commit -m "bbrplus arm"
           git remote add boxtest "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u boxtest release-6.1.191-arm64
+          git push -f -u boxtest release-6.1.191-arm
