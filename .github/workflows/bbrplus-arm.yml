@@ -45,6 +45,8 @@ jobs:
 
           export ARCH=arm64
           export CROSS_COMPILE=aarch64-linux-gnu-
+          export CPU_CORES="${CPU_CORES:-$(nproc)}"
+
           make defconfig
           scripts/config --set-str LOCALVERSION "-bbrplus"
           scripts/config --enable TCP_CONG_BBR
@@ -58,7 +60,8 @@ jobs:
           scripts/config --disable SLUB_DEBUG
           make olddefconfig
 
-          KBUILD_DEBARCH=arm64 make bindeb-pkg -j"$(nproc)"
+          grep -E 'CONFIG_(LOCALVERSION|TCP_CONG_BBR|TCP_CONG_BBRPLUS|DEFAULT_BBRPLUS|DEFAULT_TCP_CONG)' .config || true
+          KBUILD_DEBARCH=arm64 make bindeb-pkg -j"$CPU_CORES"
 
       - name: Move ARM deb packages to publish
         run: |
