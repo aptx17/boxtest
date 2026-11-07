@@ -49,13 +49,15 @@ jobs:
 
           make defconfig
           cat >> .config <<'EOF'
-CONFIG_LOCALVERSION="-bbrplus"
+CONFIG_TCP_CONG_ADVANCED=y
 CONFIG_TCP_CONG_BBR=y
 CONFIG_TCP_CONG_BBRPLUS=y
 # CONFIG_DEFAULT_BBR is not set
 CONFIG_DEFAULT_BBRPLUS=y
 # CONFIG_DEFAULT_RENO is not set
 CONFIG_DEFAULT_TCP_CONG="bbrplus"
+CONFIG_NET_SCHED=y
+CONFIG_NET_SCH_FQ=y
 EOF
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
@@ -63,13 +65,13 @@ EOF
           scripts/config --disable SLUB_DEBUG
           make olddefconfig
 
-          grep -Fxq 'CONFIG_LOCALVERSION="-bbrplus"' .config
+          grep -Fxq 'CONFIG_TCP_CONG_ADVANCED=y' .config
           grep -Fxq 'CONFIG_TCP_CONG_BBR=y' .config
           grep -Fxq 'CONFIG_TCP_CONG_BBRPLUS=y' .config
           grep -Fxq 'CONFIG_DEFAULT_BBRPLUS=y' .config
           grep -Fxq 'CONFIG_DEFAULT_TCP_CONG="bbrplus"' .config
-          grep -Fxq '# CONFIG_DEFAULT_BBR is not set' .config
-          grep -Fxq '# CONFIG_DEFAULT_RENO is not set' .config
+          grep -Fxq 'CONFIG_NET_SCHED=y' .config
+          grep -Fxq 'CONFIG_NET_SCH_FQ=y' .config
 
           KBUILD_DEBARCH=arm64 make deb-pkg -j"$CPU_CORES"
 
