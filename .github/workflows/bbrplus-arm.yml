@@ -6,8 +6,8 @@ on:
       - main
     paths:
       - '.github/workflows/bbrplus-arm.yml'
-  # schedule:
-  #   - cron: '00 00 * * *'
+      - 'convert_official_linux-6.1.x_src_to_bbrplus.patch'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -49,16 +49,16 @@ jobs:
 
           make defconfig
           cat >> .config <<'EOF'
-           CONFIG_TCP_CONG_ADVANCED=y
-           CONFIG_TCP_CONG_BBR=y
-           CONFIG_TCP_CONG_BBRPLUS=y
-           # CONFIG_DEFAULT_BBR is not set
-           CONFIG_DEFAULT_BBRPLUS=y
-           # CONFIG_DEFAULT_RENO is not set
-           CONFIG_DEFAULT_TCP_CONG="bbrplus"
-           CONFIG_NET_SCHED=y
-           CONFIG_NET_SCH_FQ=y
-            EOF
+          CONFIG_TCP_CONG_ADVANCED=y
+          CONFIG_TCP_CONG_BBR=y
+          CONFIG_TCP_CONG_BBRPLUS=y
+          # CONFIG_DEFAULT_BBR is not set
+          CONFIG_DEFAULT_BBRPLUS=y
+          # CONFIG_DEFAULT_RENO is not set
+          CONFIG_DEFAULT_TCP_CONG="bbrplus"
+          CONFIG_NET_SCHED=y
+          CONFIG_NET_SCH_FQ=y
+          EOF
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
           scripts/config --disable MODULE_SIG
@@ -79,7 +79,7 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p publish
-          find . -maxdepth 1 -type f -name '*.deb' -exec mv -t publish {} +
+          find . .. -maxdepth 2 -type f -name '*.deb' -exec mv -t publish {} +
           test -n "$(find publish -maxdepth 1 -type f -name '*.deb' -print -quit)"
 
       - name: Push ARM packages to release branch
@@ -90,7 +90,7 @@ jobs:
           git init
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release-6.1.191-arm
+          git checkout -B release-6.1.191-arm
           git add -A
           git commit -m "bbrplus arm"
           git remote add boxtest "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
