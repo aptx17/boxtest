@@ -46,8 +46,12 @@ jobs:
           export ARCH=arm64
           export CROSS_COMPILE=aarch64-linux-gnu-
           make defconfig
+          scripts/config --set-str LOCALVERSION "-bbrplus"
+          scripts/config --enable TCP_CONG_BBR
           scripts/config --enable TCP_CONG_BBRPLUS
+          scripts/config --disable DEFAULT_BBR
           scripts/config --enable DEFAULT_BBRPLUS
+          scripts/config --set-str DEFAULT_TCP_CONG "bbrplus"
           scripts/config --disable SECURITY_LOCKDOWN_LSM
           scripts/config --disable DEBUG_INFO
           scripts/config --disable MODULE_SIG
